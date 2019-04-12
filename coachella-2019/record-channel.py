@@ -1,3 +1,4 @@
+import argparse
 import requests
 from streamlink import Streamlink
 import sys
@@ -27,10 +28,16 @@ def get_channels(region, phase):
 	
 	return data["channels"]
 
-if len(sys.argv) < 2:
+parser = argparse.ArgumentParser(description='Record a Coachella channel')
+parser.add_argument('channel')
+parser.add_argument('-o', '--output-dir', default="./streams")
+
+args = parser.parse_args()
+
+if not args.channel:
 	print("Supply a channel")
 	exit()
-channel = int(sys.argv[1])
+channel = int(args.channel)
 
 if channel < 1 or channel > 3:
 	print("Channel must be one of 1, 2 and 3")
@@ -58,9 +65,9 @@ streamlink.set_option("hls-segment-timeout", 9999)
 filename = "channel{}-{}.ts".format(channel, int(time.time()))
 streams = streamlink.streams(channel_url)
 stream = streams["best"]
-
-print("Writing stream {} to {}".format(stream.url, filename))
-with open("streams/" + filename, 'wb') as out_file, stream.open() as in_stream:
+print("Found stream {}".format(stream.url))
+print("Writing stream to {}".format(args.output_dir + "/" + filename))
+with open(args.output_dir + "/" + filename, 'wb') as out_file, stream.open() as in_stream:
 	while True:
 		data = in_stream.read(1024)
 		if not data:
