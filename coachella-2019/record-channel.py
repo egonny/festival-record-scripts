@@ -40,15 +40,16 @@ def record_stream(channel, output_dir):
 		print("Uploader is not coachella, stopping")
 		exit()
 
+	filename = "channel{}-{}.ts".format(channel, int(time.time()))
+
 	streamlink = Streamlink()
 	streamlink.set_loglevel("debug")
-	streamlink.set_logoutput(sys.stdout)
+	streamlink.set_logoutput(output_dir + "/" + filename + ".log")
 	streamlink.set_option("hls-live-edge", 9999999)
 	streamlink.set_option("hls-segment-attempts", 99)
 	streamlink.set_option("hls-segment-threads", 5)
 	streamlink.set_option("hls-segment-timeout", 9999)
 
-	filename = "channel{}-{}.ts".format(channel, int(time.time()))
 	streams = streamlink.streams(channel_url)
 	stream = streams["best"]
 	print("Found stream {}".format(stream.url))

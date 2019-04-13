@@ -1,4 +1,3 @@
-screen -d -m python3 /home/egon/projects/festival-record-scripts/coachella-2019/record-channel.py 1 --output-dir /media/egon/DATA/coachella
-screen -d -m python3 /home/egon/projects/festival-record-scripts/coachella-2019/record-channel.py 2 --output-dir /media/egon/DATA/coachella
-screen -d -m python3 /home/egon/projects/festival-record-scripts/coachella-2019/record-channel.py 3 --output-dir /media/egon/DATA/coachella
-
+pm2 start --name coachella-ch-1 --interpreter=python3 -o out-1.log -e err-1.log /home/egon/projects/festival-record-scripts/coachella-2019/record-channel.py -- 1 --output-dir /media/egon/DATA/coachella
+pm2 start --name coachella-ch-2 --interpreter=python3 -o out-2.log -e err-2.log /home/egon/projects/festival-record-scripts/coachella-2019/record-channel.py -- 2 --output-dir /media/egon/DATA/coachella
+pm2 start --name coachella-ch-3 --interpreter=python3 -o out-3.log -e err-3.log /home/egon/projects/festival-record-scripts/coachella-2019/record-channel.py -- 3 --output-dir /media/egon/DATA/coachella
