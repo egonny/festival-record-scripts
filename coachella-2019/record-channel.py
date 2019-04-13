@@ -29,7 +29,7 @@ def get_channels(region, phase):
 	return data["channels"]
 
 def record_stream(channel, output_dir):
-	channels = get_channels("world", 1)
+	channels = get_channels("world", 2)
 	channel_url = "http://www.youtube.com/watch?v={}".format(channels[channel - 1])
 	print("Downloading from", channel_url)
 
